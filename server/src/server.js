@@ -8,12 +8,14 @@ import app from "./app.js";
 import express from 'express';
 //route files import
 import authRoutes from './routes/auth.routes.js';
+import jobRoutes from './routes/job.routes.js';
 
 const PORT= process.env.PORT || 5000;
 app.use(express.json());
 
 //routes to be sent to
 app.use("/api/auth", authRoutes);
+app.use("/api/jobs", jobRoutes);
 
 
 app.listen(PORT,()=>{
