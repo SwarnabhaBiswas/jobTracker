@@ -69,3 +69,68 @@ export const getJobs = async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 };
+
+export const updateJob= async (req,res)=>{
+  try{
+    const {id} = req.params;
+    const job = await Job.findById(id); 
+
+    if(!job){
+      res.status(404).json({
+        message: "No jobs found"
+      })
+    }
+
+    if(job.user.toString() !== job.user._id.toString()){
+      return res.status(401).json({
+        message:"Not authorised"
+      })
+    }
+
+    const {title,company,status} = req.body;
+
+    if(title!==undefined) job.title=title;
+    if(company!==undefined) job.company=company;
+    if(status!==undefined) job.status=status;
+
+    await job.save();
+
+    res.status(200).json(job);
+
+  }
+  catch(e){
+    res.status(500).json({
+      message:e.message
+    })
+  }
+}
+
+export const deleteJob = async (req,res)=>{
+  try{
+    const {id} = req.params;
+    const job = await Job.findById(id); 
+
+    if(!job){
+      res.status(404).json({
+        message: "No jobs found"
+      })
+    }
+
+    if(job.user.toString() !== job.user._id.toString()){
+      return res.status(401).json({
+        message:"Not authorised"
+      })
+    }
+
+    await job.deleteOne();
+
+    res.status(200).json({
+      message:"Deleted successfully"
+    })
+  }
+  catch(e){
+    res.status(500).json({
+      message:e.message
+    })
+  }
+}
