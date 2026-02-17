@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
+import api from "../api/axios";
 
 const Dashboard = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -11,22 +12,11 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(`${apiUrl}/jobs`, {
-          headers: {
-            Authorization: `Bearer ${token}`, //sends token saved by login
-          },
-        });
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message);
-        }
-        
-        setjobs(data.jobs); //since data is an object and jobs is an array and we do .map on arrays
+        const response = await api.get("/jobs");
+        setjobs(response.data.jobs); //since data is an object and jobs is an array and we do .map on arrays
 
       } catch (e) {
-        setError(e.message);
+        setError(e.response?.data?.message);
       }
     };
     fetchJobs(); //calls itself

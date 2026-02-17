@@ -1,53 +1,38 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
+import api from "../api/axios";
 
 const Login = () => {
-  const {login} = useContext(AuthContext);
-  const navigate=useNavigate();
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  const [formData,setFormData] = useState({
+  const [formData, setFormData] = useState({
     email: "",
-    password: ""
+    password: "",
   });
-  const [error,setError] =useState("");
+  const [error, setError] = useState("");
 
-  const handleChange=(e)=>{
+  const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]:e.target.value
+      [e.target.name]: e.target.value,
     });
-  }
+  };
 
-  const handleSubmit =async (e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const token = localStorage.getItem("token");
-
-      const response= await fetch(`${apiUrl}/auth/login`,{
-        method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-        },
-        body:JSON.stringify(formData)
-      })
-      const data= await response.json();
-
-      if(!response.ok){
-        throw new Error(data.message)
-      }
-      
-      login(data);
-      console.log("Login sucessfully");
-      //redirect
+    try {
+      //login now uses axios no manual headers, no manual stringify and login data handled by context
+      const response = await api.post("/auth/login", formData);
+      login(response.data);
       navigate("/dashboard");
-    }
-    catch(e){
+    } catch (e) {
       setError(e.message);
     }
-  }
+  };
 
   return (
     <div>
