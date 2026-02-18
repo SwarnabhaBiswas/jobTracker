@@ -124,7 +124,9 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-slate-900 text-white font-bold py-4 rounded-md hover:bg-slate-800 transition-all active:scale-[0.98]"
+              className={`
+              ${loading ? "bg-slate-550" :"bg-slate-900"}
+              w-full text-white font-bold py-4 rounded-md hover:bg-slate-550 transition-all active:scale-[0.98]`}
             >
               {loading ? "Signing you in": "Register Now"}
             </button>
