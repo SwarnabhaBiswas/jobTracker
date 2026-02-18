@@ -65,6 +65,18 @@ export const DashboardProvider = ({ children }) => {
     }
   };
 
+  const updateJobStatus = async (id, updatedData) => {
+  try {
+    const res = await api.put(`/jobs/${id}`, updatedData);
+
+    setJobs((prev) =>
+      prev.map((j) => (j._id === id ? res.data : j))
+    );
+  } catch (e) {
+    console.error(e.message);
+  }
+};
+
   const deleteJob = async (id) => {
     try {
       setLoading(true);
@@ -81,6 +93,7 @@ export const DashboardProvider = ({ children }) => {
     <DashboardContext.Provider
       value={{
         jobs,
+        setJobs,
         loading,
         isModalOpen,
         selectedJob,
@@ -88,6 +101,7 @@ export const DashboardProvider = ({ children }) => {
         openEditModal,
         closeModal,
         saveJob,
+        updateJobStatus,
         deleteJob,
       }}
     >

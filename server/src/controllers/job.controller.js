@@ -26,38 +26,15 @@ export const createJob = async (req, res) => {
 
 export const getJobs = async (req, res) => {
   try {
-    const { status, search, sort, page = 1, limit = 5 } = req.query;
 
     const queryObject = {
       user: req.user._id,
     }; //to extract needed values
 
-    //search by status
-    if (status && status !== "all") {
-      queryObject.status = status;
-    }
 
-    //search by title or company
-    if (search) {
-      queryObject.$or = [
-        { title: { $regex: search, $options: "i" } },
-        { company: { $regex: search, $options: "i" } },
-      ];
-    }
-    //sorting
-    let sortOption = { createdAt: -1 };
-    if (sort === "oldest") {
-      sortOption = { createdAt: 1 };
-    }
-
-    // //paging. if on 1st page means 1-1*5=0 means skip no jobs and display 5 since limit is 5
-    // //if page=2, 2-1*5 means skip 5 and show next 5
-    // const skip = (page - 1) * limit;
 
     const jobs = await Job.find(queryObject)
-      .sort(sortOption)
-      // .skip(skip)
-      // .limit(Number(limit));
+ 
     const totalJobs = await Job.countDocuments(queryObject);
 
     res.status(200).json({
@@ -81,7 +58,7 @@ export const updateJob= async (req,res)=>{
       })
     }
 
-    if(job.user.toString() !== job.user._id.toString()){
+    if(job.user.toString() !== req.user._id.toString()){
       return res.status(401).json({
         message:"Not authorised"
       })
@@ -116,7 +93,7 @@ export const deleteJob = async (req,res)=>{
       })
     }
 
-    if(job.user.toString() !== job.user._id.toString()){
+    if(job.user.toString() !== req.user._id.toString()){
       return res.status(401).json({
         message:"Not authorised"
       })
