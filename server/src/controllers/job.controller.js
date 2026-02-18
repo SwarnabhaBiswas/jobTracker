@@ -50,19 +50,19 @@ export const getJobs = async (req, res) => {
       sortOption = { createdAt: 1 };
     }
 
-    //paging. if on 1st page means 1-1*5=0 means skip no jobs and display 5 since limit is 5
-    //if page=2, 2-1*5 means skip 5 and show next 5
-    const skip = (page - 1) * limit;
+    // //paging. if on 1st page means 1-1*5=0 means skip no jobs and display 5 since limit is 5
+    // //if page=2, 2-1*5 means skip 5 and show next 5
+    // const skip = (page - 1) * limit;
 
     const jobs = await Job.find(queryObject)
       .sort(sortOption)
-      .skip(skip)
-      .limit(Number(limit));
+      // .skip(skip)
+      // .limit(Number(limit));
     const totalJobs = await Job.countDocuments(queryObject);
 
     res.status(200).json({
       totalJobs,
-      page: Number(page),
+      // page: Number(page),
       jobs,
     });
   } catch (e) {

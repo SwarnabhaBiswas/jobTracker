@@ -45,11 +45,11 @@ const JobModal = () => {
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
       onClick={closeModal}
     >
       <div
-        className="bg-slate-800 border border-slate-700 rounded-xl w-full max-w-md p-6 shadow-2xl"
+        className="bg-slate-900 border border-slate-700 rounded-xl w-full max-w-md p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <h2 className="text-xl font-semibold mb-6">
@@ -64,7 +64,7 @@ const JobModal = () => {
             value={formData.title}
             onChange={handleChange}
             required
-            className="w-full bg-slate-700 border border-slate-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full bg-slate-700 border border-slate-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <input
@@ -74,14 +74,14 @@ const JobModal = () => {
             value={formData.company}
             onChange={handleChange}
             required
-            className="w-full bg-slate-700 border border-slate-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full bg-slate-700 border border-slate-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full bg-slate-700 border border-slate-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="w-full bg-slate-700 border border-slate-600 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="applied">Applied</option>
             <option value="interview">Interview</option>
@@ -100,11 +100,11 @@ const JobModal = () => {
 
             <button
               type="submit"
-              disabled={loading} // 👈 MUST BE OUTSIDE the className string
+              disabled={loading}
               className={`px-4 py-2 rounded-md transition ${
                 loading
                   ? "bg-slate-500 cursor-not-allowed"
-                  : "bg-emerald-500 hover:bg-emerald-600"
+                  : "bg-blue-700 hover:bg-blue-600"
               }`}
             >
               {loading ? "Processing..." : selectedJob ? "Update" : "Create"}

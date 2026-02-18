@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         }
       />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 }
