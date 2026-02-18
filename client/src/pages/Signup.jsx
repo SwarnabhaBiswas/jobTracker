@@ -7,13 +7,14 @@ import { AuthContext } from "../context/authContext";
 const Signup = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const { login, loading } = useContext(AuthContext);
+  const { login} = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
+  const [loading , setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -25,6 +26,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch(`${apiUrl}/auth/register`, {
         method: "POST",
         headers: {
@@ -47,6 +49,9 @@ const Signup = () => {
       navigate("/dashboard");
     } catch (e) {
       setError(e.message);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
