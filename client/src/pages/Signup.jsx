@@ -7,7 +7,7 @@ import { AuthContext } from "../context/authContext";
 const Signup = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
-  const { login } = useContext(AuthContext);
+  const { login, loading } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -118,9 +118,10 @@ const Signup = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full bg-slate-900 text-white font-bold py-4 rounded-md hover:bg-slate-800 transition-all active:scale-[0.98]"
             >
-              Register Now
+              {loading ? "Signing you in": "Register Now"}
             </button>
           </form>
         </div>
